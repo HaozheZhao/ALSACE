@@ -1,6 +1,3 @@
-# ALSACE
-The official implementation of "Mitigating Language-Level Performance Disparity in mPLMs via Teacher Language Selection and Cross-lingual Self-Distillation (NAACL 2024)"
-
 # NAACL 2024: Mitigating Language-Level Performance Disparity in mPLMs via Teacher Language Selection and Cross-Lingual Self-Distillation
 
 Welcome to the official implementation of the paper "Mitigating Language-Level Performance Disparity in mPLMs via Teacher Language Selection and Cross-Lingual Self-Distillation" presented at NAACL 2024.
