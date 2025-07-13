@@ -21,7 +21,7 @@ do_train=False
 do_valid=True
 do_predict=False
 
-python /home/haozhezhao/Test/specific-prompt-nodata/run.py \
+python run.py \
     --task_name xglue \
     --dataset_name xnli \
     --dataset_config_name None \

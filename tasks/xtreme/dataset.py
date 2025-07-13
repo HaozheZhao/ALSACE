@@ -230,12 +230,9 @@ class XtremeDataset():
 
                 lang_dict={}
                 for each in to_lang:
-                    with open(f'/home/haozhezhao/SuperGen/test_data_QQP/test.{each}.json', mode='r') as f:
+                    with open(f'SuperGen/test_data_QQP/test.{each}.json', mode='r') as f:
                         lang_dict[each]= json.load(f)
-                # for each in to_lang:
-                #     with open(f'/home/haozhezhao/SuperGen/test_data/test.{each}.json', mode='r') as f:
-                #         lang_dict[each]= json.load(f)
-                # label_dict= {'contradiction':2, 'entailment':0, 'neutral':1}
+           
                 new_dataset={}
                 for each in to_lang:
                     info = lang_dict[each]
@@ -301,7 +298,7 @@ class XtremeDataset():
 
             if training_args.do_train:
                 if data_args.self_training is not None:
-                    with open(f'/home/haozhezhao/Test/specific-prompt-nodata/tasks/xtreme/xlm_roberta_large_xtreme_self_training_only_en.json', mode='r') as f:
+                    with open(f'self_training.json', mode='r') as f:
                         train_data= json.load(f)
                     label=[]
                     input_ids =[]

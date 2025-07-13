@@ -76,22 +76,6 @@ class XGlueDataset():
                     "1": {"0": "true", "1": "false", "-1": "a"},
                 },
                 "3": {
-                    # "0": {"0": "yes", "1": "maybe", "2": "no", "-1": "no"},
-                    # "1": {"0": "نعم", "1": "ربما", "2": "لا", "-1": "لا"},
-                    # "2": {"0": "Да", "1": "може би", "2": "Не", "-1": "Не"},
-                    # "3": {"0": "ja", "1": "vielleicht", "2": "Nein", "-1": "Nein"},
-                    # "4": {"0": "Ναι", "1": "ίσως", "2": "Όχι", "-1": "Όχι"},
-                    # "5": {"0": "sí", "1": "quizás", "2": "no", "-1": "no"},
-                    # "6": {"0": "oui", "1": "peut-être", "2": "Non", "-1": "Non"},
-                    # "7": {"0": "हाँ", "1": "शायद", "2": "नहीं", "-1": "नहीं"},
-                    # "8": {"0": "да", "1": "возможно", "2": "Нет", "-1": "Нет"},
-                    # "9": {"0": "Ndiyo", "1": "Labda", "2": "La", "-1": "La"},
-                    # "10": {"0": "ใช่", "1": "บางที", "2": "ไม่ใช่", "-1": "ไม่ใช่"},
-                    # "11": {"0": "evet", "1": "belki", "2": "Hayır", "-1": "Hayır"},
-                    # "12": {"0": "ہاں", "1": "شاید", "2": "نہيں", "-1": "نہيں"},
-                    # "13": {"0": "Có", "1": "có lẽ", "2": "Không", "-1": "Không"},
-                    # "14": {"0": "是", "1": "或许", "2": "否", "-1": "否"}
-                    # "0": {"0": "entailment", "1": "neutral", "2": "contradiction"},
                     "0": {"0": "yes", "1": "maybe", "2": "no"},
                     "1": {"0": "نعم", "1": "ربما", "2": "لا"},
                     "2": {"0": "Да", "1": "може би", "2": "Не"},
@@ -148,20 +132,13 @@ class XGlueDataset():
             self.label_dict_ver= {2:'no', 0:'yes', 1:'maybe'}
             
             self.multilang_to_id =  dict(zip(self.multilang_id_dict.values(),self.multilang_id_dict.keys()))
-        # elif data_args.dataset_name in ["boolq", "wic", "wsc", "copa", "multirc"]:
-        #     self.verbalizer_dict = {
-        #         "2": {
-        #             "0": {"0": "no", "1": "yes", "-1": "no"},
-        #             "1": {"0": "false", "1": "true", "-1": "a"},
-        #         },
-        #     }
 
 
         self.pre_seq_len = self.model_args.pre_seq_len
         if data_args.dataset_name == 'mlama':
-            train_data = pd.read_pickle('/home/haozhezhao/Test/specific-prompt-nodata/tasks/xtreme/mlama_data/train_en.pkl')
-            test_file = glob("/home/haozhezhao/Test/specific-prompt-nodata/tasks/xtreme/mlama_data/test_"+'*.pkl')     
-            valid_file = glob("/home/haozhezhao/Test/specific-prompt-nodata/tasks/xtreme/mlama_data/valid_"+'??.pkl')     
+            train_data = pd.read_pickle('tasks/xtreme/mlama_data/train_en.pkl')
+            test_file = glob("tasks/xtreme/mlama_data/test_"+'*.pkl')     
+            valid_file = glob("tasks/xtreme/mlama_data/valid_"+'??.pkl')     
             lang_dict={
                 "0":"en",
                 "1":"ar",
@@ -199,9 +176,9 @@ class XGlueDataset():
                 self.padding = "longest"
 
         elif data_args.dataset_name == 'geolama':
-            train_data = pd.read_pickle('/home/haozhezhao/Test/specific-prompt-nodata/GeoLama.pkl')
-            test_file = pd.read_pickle("/home/haozhezhao/Test/specific-prompt-nodata/GeoLama_test.pkl")     
-            valid_file = pd.read_pickle("/home/haozhezhao/Test/specific-prompt-nodata/GeoLama_test.pkl")
+            train_data = pd.read_pickle('GeoLama.pkl')
+            test_file = pd.read_pickle("GeoLama_test.pkl")     
+            valid_file = pd.read_pickle("GeoLama_test.pkl")
             self.raw_datasets={}
             self.raw_datasets['train'] = Dataset.from_dict(train_data).shuffle()
             self.raw_datasets['test'] = Dataset.from_dict(test_file)
@@ -400,21 +377,9 @@ class XGlueDataset():
         
         if self.data_args.zero_tuning is not None:
             if training_args.do_train:
-                # dataset_name = list(self.raw_datasets.keys())
-                # dataset_name.remove('train')
-                # test_dataset=self.raw_datasets["test.en"]
-                # for each in dataset_name:
-                #     if 'test' in each:
-                #         _,lang=each.split('.')
-                #         test_dataset = test_dataset.add_column(f"input_ids_{lang}",self.raw_datasets[each]['input_ids'])
-                #         test_dataset = test_dataset.add_column(f"label_{lang}",self.raw_datasets[each]["label"])
-                # self.train_dataset = test_dataset
-
                 to_lang = ['ar', 'th','bg', 'de', 'el', 'es', 'fr',  'ru',  'vi', 'zh','en','sw','ur','tr','hi']
-                # to_lang = ['en', 'zh','hi', 'fa', 'sw']
 
                 lang_rank = ['en', 'fr', 'bg', 'es', 'de', 'vi', 'ru', 'el', 'zh', 'th', 'tr','hi', 'ar', 'ur', 'sw']
-                # lang_rank = ['en', 'zh','hi', 'fa', 'sw']
 
                 weak_lang =[ 'tr','hi', 'ar', 'ur', 'sw']
 
@@ -462,11 +427,9 @@ class XGlueDataset():
 
                 lang_dict={}
                 for each in to_lang:
-                    with open(f'/home/haozhezhao/SuperGen/test_data/test.{each}.json', mode='r') as f:
+                    with open(f'SuperGen/test_data/test.{each}.json', mode='r') as f:
                         lang_dict[each]= json.load(f)
-                # geo_data = pd.read_pickle('/home/haozhezhao/Test/specific-prompt-nodata/GeoLama.pkl')
-                # for i,each in enumerate(to_lang):
-                #         lang_dict[each]= {'input':geo_data['input'][50*i:50*(i+1)]}
+
                 new_dataset={}
                 for each in to_lang:
                     info = lang_dict[each]
@@ -486,17 +449,7 @@ class XGlueDataset():
                         if each not in new_dataset:
                             new_dataset[each]=[]
                         new_dataset[each].append(data_dict)
-                # for each in to_lang:
-                #     info = lang_dict[each]
-                #     for data in info['input']:
-                #         data_dict={}
-                #         data_dict['label']= 0
-                #         input_tokens = data
-                #         data_dict['input_ids'] = self.tokenizer(input_tokens, padding=False, max_length=512, truncation=True)["input_ids"]
-                #         data_dict['set_type'] = each
-                #         if each not in new_dataset:
-                #             new_dataset[each]=[]
-                #         new_dataset[each].append(data_dict)
+
                 
                 for lang in lang_pair:
                     lang_inputs1 = lang_inputs1 + self.raw_datasets[f'validation.{lang[0]}']['input_ids'][:500]
@@ -505,25 +458,6 @@ class XGlueDataset():
                     lang_label2 = lang_label2 + self.raw_datasets[f'validation.{lang[1]}']['label'][:500]
                     types1 = types1 + self.raw_datasets[f'validation.{lang[1]}']['set_type'][:500]
                     types2 = types2 + self.raw_datasets[f'validation.{lang[1]}']['set_type'][:500]
-                # for lang in lang_pair:
-                #     inputs_0 = [each['input_ids'] for each in new_dataset[lang[0]]]
-                #     inputs_1 = [each['input_ids'] for each in new_dataset[lang[1]]]                    
-                    
-                #     label_0 = [each['label'] for each in new_dataset[lang[0]]]
-                #     label_1 = [each['label'] for each in new_dataset[lang[1]]]                    
-                    
-                #     set_type_0 = [each['set_type'] for each in new_dataset[lang[0]]]
-                #     set_type_1 = [each['set_type'] for each in new_dataset[lang[1]]]
-      
-
-                #     lang_inputs1 = lang_inputs1 + inputs_0
-                #     lang_inputs2 = lang_inputs2 + inputs_1
-                #     lang_label1 = lang_label1 + label_0
-                #     lang_label2 = lang_label2 + label_1
-                #     types1 = types1 + set_type_0
-                #     types2 = types2 + set_type_1
-
-
                 
                 dataset_dict ={"input_ids_1":lang_inputs1, "input_ids_2":lang_inputs2,"label_1":lang_label1 ,"label_2":lang_label2,"set_type1":types1 ,"set_type2":types2}
                 ds=Dataset.from_dict(dataset_dict)
@@ -546,7 +480,7 @@ class XGlueDataset():
             if training_args.do_train:
                 if self.data_args.generate_train  is not None:
 
-                    with open('/home/haozhezhao/SuperGen/data_test/MNLI/train.json', mode='r') as f:
+                    with open('SuperGen/data_test/MNLI/train.json', mode='r') as f:
                         train_data= json.load(f)
                     # train_data = sort_score(train_data)
                     if self.data_args.max_train_samples is not None:
@@ -568,7 +502,7 @@ class XGlueDataset():
                     ds =ds.shuffle()
                     self.train_dataset = ds
                 elif self.data_args.self_training is not None:
-                    with open('/home/haozhezhao/Test/specific-prompt-nodata/tasks/xtreme/mt5_2epoch_xnli_self_training_data.json', mode='r') as f:
+                    with open('tasks/xtreme/mt5_2epoch_xnli_self_training_data.json', mode='r') as f:
                         train_data= json.load(f)
                     # train_data = train_data[-569:]
                     # model_train_data = self.raw_datasets["train"]
@@ -713,13 +647,12 @@ class XGlueDataset():
                     f["labels"] = label_ids
 
                 
-                elif self.data_args.dataset_name in ["wsc"]: # 不需要 label_token_ids_list，需要label_token_ids
+                elif self.data_args.dataset_name in ["wsc"]: 
                     label_ids = [-100 for _ in range(len(f["input_ids"]))]
                     mask_start = f["input_ids"].index(self.tokenizer.mask_token_id)
-                    # label_ids[mask_start + len(f["label_token_ids"][1:-1]): mask_start + len(f["label_token_ids"][1:-1]) + f["num_pad"]] = [self.tokenizer.pad_token_id] * f["num_pad"]
                     label_ids[mask_start: mask_start + len(f["label_token_ids"][1:-1])] = f["label_token_ids"][1:-1]
                     f["labels"] = label_ids
-                elif self.data_args.dataset_name in ["copa"]: # 不需要 label_token_ids_list和label_token_ids 换成了choice1和choice2
+                elif self.data_args.dataset_name in ["copa"]: 
                     label_ids = [-100 for _ in range(len(f["input_ids"]))]
                     mask_start = f["input_ids"].index(self.tokenizer.mask_token_id)
                     label_ids[mask_start: mask_start + len(f["label_token_ids"][1:-1])] = f["label_token_ids"][1:-1]
@@ -730,8 +663,6 @@ class XGlueDataset():
                         label_ids[mask_start: mask_end] = f[f'{choice}_ids'][1:-1]
                         f[f'{choice}_ids'] = label_ids
 
-        # Padding work
-        #input_ids, sentence_ids, labels -> batch
         if self.data_args.dataset_name == "copa":
             pad_key_list.extend(["choice1_ids", "choice2_ids"])
         if self.data_args.dataset_name =='geolama':
@@ -759,10 +690,8 @@ class XGlueDataset():
         reduced_column.extend(["input_ids", "sentence_ids", "attention_mask", "label_token_ids", "labels", "label_ids"]) # data_collator pad
         reduced_column.extend(["idx", "input_tokens", "sentence_tokens", "label_tokens"]) # preprocess_function_pre
         reduced_column.extend(["choice1_ids", "choice2_ids"]) # copa
-        # reduced_column.extend(["label","opitions","opition"]) # geolama
         if self.data_args.zero_tuning is not None and( "label_1" in f):
             reduced_column.extend(pad_key_list)
-        # reduced_column.extend(["label_token_ids_list"]) # xnli
         
         for k, v in f.items():
             if v is not None and not isinstance(v, str) and k not in reduced_column:
@@ -810,37 +739,11 @@ class XGlueDataset():
             "sentence_ids": self.tokenizer(examples["sentence_tokens"], padding=False, max_length=512, truncation=True)["input_ids"],
         }
         if self.config.model_type in ['mt5','xglm']:
-            # result =  self.tokenizer(examples["input_tokens"], padding=False, max_length=512, truncation=True)
             with self.tokenizer.as_target_tokenizer():
                 label_token_ids = self.tokenizer(examples["label_tokens"], padding=False, max_length=512, truncation=True)["input_ids"]
             result['labels'] = label_token_ids
             result['label_ids'] = result['input_ids']
 
-        #     result = {
-        #     "input_ids": self.tokenizer(examples["input_tokens"], padding=False, max_length=512, truncation=True)["input_ids"],
-        #     # "input_attention_mask": self.tokenizer(examples["input_tokens"], padding=False, max_length=512, truncation=True)["attention_mask"],
-        #     "label_token_ids": self.tokenizer(examples["label_tokens"], padding=False, max_length=512, truncation=True)["input_ids"],
-        #     # "label_attention_mask": self.tokenizer(examples["label_tokens"], padding=False, max_length=512, truncation=True)["attention_mask"],
-        #     "sentence_ids": self.tokenizer(examples["sentence_tokens"], padding=False, max_length=512, truncation=True)["input_ids"],
-        #     # "sentence_attention_mask": self.tokenizer(examples["sentence_tokens"], padding=False, max_length=512, truncation=True)["attention_mask"],
-
-        # }
-        # if self.config.model_type =='mt5':
-        #     for each in result['input_ids'] :
-        #         if len(each) == 512:
-        #             each[-1] = 1              
-        #     for each in result['sentence_ids'] :
-        #         if len(each) == 512:
-        #             each[-1] = 1            
-        # else:
-        #     for each in result['input_ids'] :
-        #         if len(each) == 512:
-        #             each[-1] = 119              
-        #             each[-2] = 103              
-        #     for each in result['sentence_ids'] :
-        #         if len(each) == 512:
-        #             each[-1] = 119              
-        #             each[-2] = 103 
    
 
         return result
@@ -936,7 +839,6 @@ class XGlueDataset():
             else:
                 lang_type='en'
             if self.config.model_type in ['mt5']:
-                # result["input_tokens"] =''.join(["xnli hypothesis: ",hypothesis, " premise: ",premise])    
                 result["input_tokens"] =''.join([self.multilang_promote[self.multilang_to_id[lang_type]][0],premise, self.multilang_promote[self.multilang_to_id[lang_type]][1],hypothesis, self.multilang_promote[self.multilang_to_id[lang_type]][2],'.'])    
 
             elif self.config.model_type in ['xglm']:

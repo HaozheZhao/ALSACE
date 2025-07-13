@@ -142,8 +142,6 @@ def parse_args():
     parser.add_argument("--per_device_train_batch_size", type=int, default=4, help='单卡的batch size')
     parser.add_argument("--num_training_steps", type=int, default=1000)
     parser.add_argument("--eval_period", type=int, default=50, help='训练时eval的时间间隔(用来挑ckpt)')
-    # parser.add_argument("--optimization", type=str, default="adamw")
-    # parser.add_argument("--local_rank", type=int, default=-1, help="local_rank for distributed training on gpus")
 
     parser.add_argument("--only_train_single_template", action="store_true")
     parser.add_argument("--only_eval_single_template", action="store_true")
