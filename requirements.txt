@@ -1,0 +1,6 @@
+datasets==2.1.0
+numpy
+tqdm
+transformers==4.17.0
+torch
+sklearn

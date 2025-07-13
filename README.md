@@ -10,23 +10,41 @@ With this code, you can:
 - Train the mPLM with the ALSACE method
 - Evaluate the language-level performance disparity of the mPLM
 
-# Requirements
-The requirements to use this code include Python 3.6+, PyTorch 1.0+, and other common packages listed in `requirements.txt`.
+# Setup
+We conduct our experiment with Anaconda3. If you have installed Anaconda3, then create the environment for ALSACE:
+```shell
+conda create -n alsace python=3.8.5
+conda activate alsace
+```
+
+After we setup basic conda environment, install required packages via:
+```shell
+pip install -r requirements.txt
+```
 
 # Training
-For training the model, please follow the following instructions:(will be available soon).
 
-# Evaluation
-To evaluate the language-level performance disparity of any mPLM, please refer to the following instruction and scripts:(will be available soon).
+```shell
+bash run_script/finetuning.sh
+
+bash run_script/distillation.sh
+```
 
 ## Citation
-If you use our work, please cite our paper (BibTex citation will be available soon).
+If you use our work, please cite our paper.
 
-## Contacts
-For any question or suggestion, you can submit an issue in this repository.
+```
+@misc{zhao2024mitigatinglanguagelevelperformancedisparity,
+      title={Mitigating Language-Level Performance Disparity in mPLMs via Teacher Language Selection and Cross-lingual Self-Distillation}, 
+      author={Haozhe Zhao and Zefan Cai and Shuzheng Si and Liang Chen and Yufeng He and Kaikai An and Baobao Chang},
+      year={2024},
+      eprint={2404.08491},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2404.08491}, 
+}
+```
+
 
 ## License
 [Apache License 2.0](https://choosealicense.com/licenses/apache-2.0/)
-
-# Disclaimer
-This is an official implementation yet it may not be free from bugs. Please use it responsibly.
