@@ -67,3 +67,4 @@ temp/
 *.nbconvert.ipynb
 *.nbconvert/
 !deepspeed.json
+*.DS_Store
