@@ -230,7 +230,7 @@ class XtremeDataset():
 
                 lang_dict={}
                 for each in to_lang:
-                    with open(f'SuperGen/test_data_QQP/test.{each}.json', mode='r') as f:
+                    with open(f'super_gen/test_data_QQP/test.{each}.json', mode='r') as f:
                         lang_dict[each]= json.load(f)
            
                 new_dataset={}

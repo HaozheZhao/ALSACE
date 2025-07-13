@@ -479,10 +479,8 @@ class XGlueDataset():
 
             if training_args.do_train:
                 if self.data_args.generate_train  is not None:
-
-                    with open('SuperGen/data_test/MNLI/train.json', mode='r') as f:
+                    with open('super_gen/data_test/MNLI/train.json', mode='r') as f:
                         train_data= json.load(f)
-                    # train_data = sort_score(train_data)
                     if self.data_args.max_train_samples is not None:
                         train_data = sample(train_data,self.data_args.max_train_samples)
 
@@ -502,12 +500,8 @@ class XGlueDataset():
                     ds =ds.shuffle()
                     self.train_dataset = ds
                 elif self.data_args.self_training is not None:
-                    with open('tasks/xtreme/mt5_2epoch_xnli_self_training_data.json', mode='r') as f:
+                    with open('tasks/xtreme/mt5_xnli_self_training_data.json', mode='r') as f:
                         train_data= json.load(f)
-                    # train_data = train_data[-569:]
-                    # model_train_data = self.raw_datasets["train"]
-                    # if self.data_args.max_train_samples is not None:
-                    #     model_train_data = sample(model_train_data,self.data_args.max_train_samples)
                     label=[]
                     input_ids =[]
                     sentence_ids=[]
@@ -522,9 +516,7 @@ class XGlueDataset():
                         input_ids.append(self.tokenizer(input_tokens, padding=False, max_length=512, truncation=True)["input_ids"])
                         sentence_token =''.join([premise, hypothesis])
                         sentence_ids.append(self.tokenizer(sentence_token, padding=False, max_length=512, truncation=True)["input_ids"])
-                    # input_ids = input_ids + model_train_data["input_ids"] 
-                    # label = label + model_train_data["label"] 
-                    # sentence_ids = sentence_ids + model_train_data["sentence_ids"] 
+
                     dataset_dict ={"input_ids":input_ids, "label":label,'sentence_ids':sentence_ids}
                     ds=Dataset.from_dict(dataset_dict)
                     ds =ds.shuffle()
