@@ -68,3 +68,5 @@ temp/
 *.nbconvert/
 !deepspeed.json
 *.DS_Store
+!SuperGen/
+!SuperGen/**
